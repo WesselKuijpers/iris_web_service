@@ -1,4 +1,5 @@
-from flask import Flask, Blueprint, jsonify
+from flask import Flask, Blueprint, jsonify, request
+from map_classes import model
 
 model_controller = Blueprint('model_controller', __name__)
 
@@ -22,7 +23,15 @@ def show(identifier):
 # function for saving a model
 @model_controller.route('/', methods=['POST'])
 def save():
-    return jsonify(success=True)
+    try:
+        if request.form["location"] != "" and request.form["name"] != "":
+            new_model = model.Model(location=request.form["location"], name=request.form["name"])
+            result = new_model.save()
+        else: 
+            result = False
+        return jsonify(success=result)
+    except:
+        return jsonify(succes=False)
 
 # function for deleting a model
 @model_controller.route('/<identifier>', methods=['DELETE'])
