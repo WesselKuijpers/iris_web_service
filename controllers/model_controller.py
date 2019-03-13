@@ -1,23 +1,18 @@
 from flask import Flask, Blueprint, jsonify, request
-from map_classes import model
+from map_classes.model import Model
 
 model_controller = Blueprint('model_controller', __name__)
 
 # function for listing all the saved models
 @model_controller.route('/', methods=['GET'])
 def index():
-    items = [
-        {"id" : 1, "location" : "files/models/cars.h5py", "name" : "cars"},
-        {"id" : 2, "location" : "files/models/goats.h5py", "name" : "goats"},
-        {"id" : 3, "location" : "files/models/bananaorcow.h5py", "name" : "bananas or cows"},
-    ]
-
+    items = Model().all()
     return jsonify(items)
 
 # function for fetching a single model
 @model_controller.route('/<identifier>', methods=['GET'])
 def show(identifier):
-    model = {"id" : 1, "location" : "files/models/cars.h5py", "name" : "cars"}
+    model = Model().find_by_id(identifier=identifier)
     return jsonify(model)
 
 # function for saving a model
@@ -25,7 +20,7 @@ def show(identifier):
 def save():
     try:
         if request.form["location"] != "" and request.form["name"] != "":
-            new_model = model.Model(location=request.form["location"], name=request.form["name"])
+            new_model = Model(location=request.form["location"], name=request.form["name"])
             result = new_model.save()
         else: 
             result = False
@@ -36,9 +31,11 @@ def save():
 # function for deleting a model
 @model_controller.route('/<identifier>', methods=['DELETE'])
 def destroy(identifier):
+    # TODO: finish model destroy funtionality
     return jsonify(success=True)
 
 # function for updating a model
-@model_controller.route('/<identifier>', methods=['PUT'])
+@model_controller.route('/<identifier>', methods=['POST'])
 def update(identifier):
+    # TODO: finish model update functionality
     return jsonify(success=True)

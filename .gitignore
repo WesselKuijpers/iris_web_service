@@ -1,0 +1,6 @@
+/__pycache__
+/controllers/__pycache__
+/db/__pycache__
+/helpers/__pycache__
+/map_classes/__pycache__
+*.pyc

@@ -6,7 +6,7 @@ from map_classes import model, log
 class Deployer:
     def forward_schema(self):
         # call the map_classes
-        # TODO: dyamic for allt map_classes in the the map_classes folder.
+        # TODO: dyamic for all map_classes in the the map_classes folder.
         model.Model()
         log.Log()
 

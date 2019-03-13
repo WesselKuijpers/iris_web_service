@@ -11,3 +11,5 @@ Or on other operating systems:
 * flask
 * SQLalchemy
 * PyMySQL
+* keras
+* tensorflow

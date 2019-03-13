@@ -19,6 +19,6 @@ app = Flask(__name__)
 
 # controller classes
 # TODO: make dynamic controller imports and register_blueprint
-app.register_blueprint(file_controller, url_prefix="/file")
+# app.register_blueprint(file_controller, url_prefix="/file")
 app.register_blueprint(model_controller, url_prefix="/model")
 app.register_blueprint(predict_controller, url_prefix="/predict")
