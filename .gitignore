@@ -4,3 +4,6 @@
 /helpers/__pycache__
 /map_classes/__pycache__
 *.pyc
+/temp/*
+/models/*
+formulier.html

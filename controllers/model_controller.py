@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, request
+from flask import Flask, Blueprint, jsonify, request, Response
 from map_classes.model import Model
 
 model_controller = Blueprint('model_controller', __name__)
@@ -7,7 +7,10 @@ model_controller = Blueprint('model_controller', __name__)
 @model_controller.route('/', methods=['GET'])
 def index():
     items = Model().all()
-    return jsonify(items)
+    resp = jsonify(items)
+    resp.headers['link'] = 'http://localhost:5000/model'
+    resp.type = 'application/json'
+    return resp
 
 # function for fetching a single model
 @model_controller.route('/<identifier>', methods=['GET'])
@@ -20,9 +23,10 @@ def show(identifier):
 def save():
     try:
         if request.form["location"] != "" and request.form["name"] != "":
-            new_model = Model(location=request.form["location"], name=request.form["name"])
+            new_model = Model(
+                location=request.form["location"], name=request.form["name"])
             result = new_model.save()
-        else: 
+        else:
             result = False
         return jsonify(success=result)
     except:

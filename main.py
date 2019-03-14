@@ -1,4 +1,5 @@
 from flask import Flask, Blueprint
+from flask_cors import CORS
 import deploy
 from controllers.file_controller import file_controller
 from controllers.model_controller import model_controller
@@ -16,7 +17,7 @@ deployer.forward_schema()
 
 # required variable for registering blueprints
 app = Flask(__name__)
-
+CORS(app)
 # controller classes
 # TODO: make dynamic controller imports and register_blueprint
 # app.register_blueprint(file_controller, url_prefix="/file")
