@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, jsonify, request, Response
 from map_classes.model import Model
+import uuid
 
 model_controller = Blueprint('model_controller', __name__)
 
@@ -22,13 +23,17 @@ def show(identifier):
 @model_controller.route('/', methods=['POST'])
 def save():
     try:
-        if request.form["location"] != "" and request.form["name"] != "":
+        if request.form["name"] != "" and request.files['model']:
+            modelname = 'models/' + str(uuid.uuid4()) + '.h5py'
+            request.files['model'].save(modelname)
+
             new_model = Model(
-                location=request.form["location"], name=request.form["name"])
+                location=modelname, 
+                name=request.form["name"])
             result = new_model.save()
         else:
             result = False
-        return jsonify(success=result)
+        return jsonify(success=result, location=modelname, name=request.form["name"])
     except:
         return jsonify(succes=False)
 
